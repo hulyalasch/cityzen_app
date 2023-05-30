@@ -4,9 +4,11 @@ streamlit
 numpy
 seaborn
 matplotlib
+warnings
 sklearn
 adjustText
 geopandas
 topojson
 shapely
+time
 
