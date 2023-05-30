@@ -10,8 +10,8 @@ st.set_page_config(page_title="CityZen App", page_icon="location.png", layout="w
 from numpy import array
 # Example: Importing specific data types from NumPy
 from numpy import int32, float64
-#import seaborn as sns
-#import matplotlib.pyplot as plt
+import seaborn as sns
+import matplotlib.pyplot as plt
 import sklearn
 import warnings
 warnings.filterwarnings("ignore")
