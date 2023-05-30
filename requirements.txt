@@ -5,6 +5,7 @@ numpy
 seaborn
 matplotlib
 sklearn
+adjustText
 geopandas
 topojson
 shapely
