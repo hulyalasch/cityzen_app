@@ -12,10 +12,10 @@ from numpy import array
 from numpy import int32, float64
 import seaborn as sns
 import matplotlib.pyplot as plt
-#import sklearn
+import sklearn
 import warnings
 warnings.filterwarnings("ignore")
-#from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import cosine_similarity
 import adjustText
 #import wikipedia
 #import wikipediaapi
