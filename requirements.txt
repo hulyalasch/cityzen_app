@@ -1,0 +1,11 @@
+altair
+pandas
+streamlit
+numpy
+seaborn
+matplotlib
+sklearn
+geopandas
+topojson
+shapely
+
