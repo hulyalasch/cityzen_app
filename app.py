@@ -76,23 +76,27 @@ def main():
                 # Update the selected features placeholder
         selected_features_placeholder.text(f"Selected Features: {', '.join(selected_features)}")
 
-            # Check if at least three parameters are selected
-        if len(selected_features) < 3:
-            st.warning('Please select at least three parameters.')
+                # Check if at least six parameters are selected
+        if len(selected_features) < 6:
+            st.warning('Please select at least six parameters.')     
     else:
 
         try:    
-            # Generate recommendations based on selected features
-            with st.spinner("Generating recommendations..."):
-                progress_text = "Operation in progress. Please wait."
-                my_bar = st.progress(5, text=progress_text)
+            # Submit button
+            if st.button("Submit"):
+                # Generate recommendations based on selected features
+                with st.spinner("Generating recommendations..."):
+                    progress_text = "Generating recommendations..."
+                    my_bar = st.progress(0)
 
-                for percent_complete in range(100):
-                    time.sleep(0.1)
-                    my_bar.progress(percent_complete + 1, text=progress_text)
+                    for percent_complete in range(100):
+                        time.sleep(0.1)
+                        my_bar.progress(percent_complete + 1)
 
             city_recommendations = generate_recommendations(landkreise_scaled, selected_features)
                                 # Delay before showing the progress message
+                                        # Show recommendations to the user
+            st.success(f"Recommendations: {city_recommendations}")
                 
             return city_recommendations
 
