@@ -77,8 +77,9 @@ def main():
         selected_features_placeholder.text(f"Selected Features: {', '.join(selected_features)}")
 
                 # Check if at least six parameters are selected
-    if len(selected_features) < 6:
-        st.warning('Please select at least six parameters.')     
+        if len(selected_features) < 6:
+            st.warning('Please select at least six parameters.')
+            
     else:
 
         try:    
@@ -95,9 +96,8 @@ def main():
 
             city_recommendations = generate_recommendations(landkreise_scaled, selected_features)
                                 # Delay before showing the progress message
-                                        # Show recommendations to the user
+                    # Show recommendations to the user
             st.success(f"Recommendations: {city_recommendations}")
-                
             return city_recommendations
 
         except ValueError:
