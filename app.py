@@ -80,29 +80,29 @@ def main():
         if len(selected_features) < 6:
             st.warning('Please select at least six parameters.')
             
-    else:
+        else:
 
-        try:    
-            # Submit button
-            if st.button("Submit"):
-                # Generate recommendations based on selected features
-                with st.spinner("Generating recommendations..."):
-                    progress_text = "Generating recommendations..."
-                    my_bar = st.progress(0)
+            try:    
+                # Submit button
+                if st.button("Submit"):
+                    # Generate recommendations based on selected features
+                    with st.spinner("Generating recommendations..."):
+                        progress_text = "Generating recommendations..."
+                        my_bar = st.progress(0)
 
-                    for percent_complete in range(100):
-                        time.sleep(0.1)
-                        my_bar.progress(percent_complete + 1)
+                        for percent_complete in range(100):
+                            time.sleep(0.1)
+                            my_bar.progress(percent_complete + 1)
 
-            city_recommendations = generate_recommendations(landkreise_scaled, selected_features)
-                                # Delay before showing the progress message
-                    # Show recommendations to the user
-            st.success(f"Recommendations: {city_recommendations}")
-            return city_recommendations
+                city_recommendations = generate_recommendations(landkreise_scaled, selected_features)
+                                    # Delay before showing the progress message
+                        # Show recommendations to the user
+                st.success(f"Recommendations: {city_recommendations}")
+                return city_recommendations
 
-        except ValueError:
-            # Handle the case when no features are selected
-            st.warning('Please select at least one parameter to generate recommendations.')
+            except ValueError:
+                # Handle the case when no features are selected
+                st.warning('Please select at least one parameter to generate recommendations.')
 
 # Generate recommendations based on selected features
 def generate_recommendations(landkreise_scaled, selected_features):
