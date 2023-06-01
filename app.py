@@ -41,9 +41,9 @@ for percent_complete in range(100):
 # Initialize Wikipedia API
 #wiki_api = wikipediaapi.Wikipedia('en')
 
-geometry = gpd.read_file("geometry_11.topojson")
+geometry = gpd.read_file("geometry_12.topojson")
 
-landkreise_scaled = pd.read_csv("landkreise_scaled.csv") 
+landkreise_scaled = pd.read_csv("landkreise_scaled.csv")
 
 # Define the list of 20 features
 all_features = landkreise_scaled.columns.to_list()[1:]
