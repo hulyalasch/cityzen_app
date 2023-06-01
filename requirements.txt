@@ -10,5 +10,5 @@ adjustText
 geopandas
 topojson
 shapely
-
+scipy
 

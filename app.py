@@ -17,6 +17,9 @@ import warnings
 warnings.filterwarnings("ignore")
 from sklearn.metrics.pairwise import cosine_similarity
 import adjustText
+import scipy
+from scipy.stats import pearsonr
+
 #import wikipedia
 #import wikipediaapi
 
@@ -117,11 +120,16 @@ def generate_recommendations(landkreise_scaled, selected_features):
     selected_data = landkreise_scaled[selected_features]
 
     # Calculate the cosine similarity matrix based on the selected columns
-    similarity_matrix = cosine_similarity(selected_data)
+
+    # Calculate the Pearson correlation matrix based on the selected columns
+    correlation_matrix = selected_data.T.corr(method='pearson')
+
 
     city_names = landkreise_scaled.index
     #num_cities = len(city_names)
-    num_cities = similarity_matrix.shape[0]
+
+    num_cities = correlation_matrix.shape[0]
+
 
     # Generate recommendations for each city
     city_recommendations = {}
@@ -134,10 +142,14 @@ def generate_recommendations(landkreise_scaled, selected_features):
 
     for i in range(num_cities):
         # Retrieve the similarity scores for the current city
-        similarity_scores = similarity_matrix[i]
+
+        # Retrieve the correlation scores for the current city
+        correlation_scores = correlation_matrix.iloc[i]
 
         # Sort the similarity scores in descending order and get the indices of the top 10 cities (excluding the current city itself)
-        top_indices = similarity_scores.argsort()[::-1][1:11]
+
+        # Sort the correlation scores in descending order and get the indices of the top 10 cities (excluding the current city itself)
+        top_indices = correlation_scores.argsort()[::-1][1:11]
 
         # Map the indices back to city names to get the top 10 recommendations
         top_cities = [city_names[j] for j in top_indices]
