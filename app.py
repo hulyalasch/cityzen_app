@@ -43,8 +43,7 @@ for percent_complete in range(100):
 
 geometry = gpd.read_file("geometry_7.topojson")
 
-landkreise_scaled = pd.read_csv("landkreise_scaled.csv")
-landkreise_scaled.set_index(["gen"]) # erase if not works
+landkreise_scaled = pd.read_csv("landkreise_scaled.csv") 
 
 # Define the list of 20 features
 all_features = landkreise_scaled.columns.to_list()[1:]
