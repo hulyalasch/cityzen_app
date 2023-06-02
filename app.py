@@ -66,7 +66,7 @@ def add_bg_from_local(image_file):
     """,
     unsafe_allow_html=True
     )
-add_bg_from_local('cityzen_1.jpg')  
+add_bg_from_local('cityzen_2.jpg')  
 
 # Create a Streamlit app
 def main():
