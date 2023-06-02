@@ -186,7 +186,7 @@ def generate_recommendations(landkreise_scaled, selected_features):
         city_name = city_name1.split(':')[0]
 
         # Display the city name as a blue link
-        st.markdown(f"[{city_name}]({wiki_url})")
+        st.sidebar.markdown(f"[{city_name}]({wiki_url})")
 
         # Update the 'Wikipedia Link' column in recommendations_gdfs for the current city
         recommendations_gdfs[city_names[i]].loc[recommendations_gdfs[city_names[i]]['gen'] == city_name1, 'Wikipedia Link'] = wiki_url
