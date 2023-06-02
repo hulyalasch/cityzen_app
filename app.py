@@ -27,6 +27,7 @@ import shapely
 from shapely.geometry import Point, LineString, Polygon, MultiPoint, MultiLineString, MultiPolygon
 
 import time
+import base64
 
 progress_text = "Operation in progress. Please wait."
 my_bar = st.progress(0, text=progress_text)
@@ -226,6 +227,25 @@ def generate_recommendations(landkreise_scaled, selected_features):
 
         # Display the plot
         st.pyplot(fig)
+    
+    
+    def add_bg_from_local(image_file):
+        with open(image_file, "rb") as image_file:
+            encoded_string = base64.b64encode(image_file.read())
+        st.markdown(
+        f"""
+        <style>
+        .stApp {{
+            background-image: url(data:image/{"png"};base64,{encoded_string.decode()});
+            background-size: cover
+        }}
+        </style>
+        """,
+        unsafe_allow_html=True
+        )
+    add_bg_from_local('cityzen.jpg')    
+    
+
      
 
     #return city_recommendations
