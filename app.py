@@ -58,7 +58,7 @@ def add_bg_from_local(image_file):
     <style>
     .stApp {{
         background-image: url(data:image/{"png"};base64,{encoded_string.decode()});
-        background-attachment: fixed;
+        
         background-size: cover
         
     }}
@@ -66,7 +66,7 @@ def add_bg_from_local(image_file):
     """,
     unsafe_allow_html=True
     )
-add_bg_from_local('cityzen.jpg')  
+add_bg_from_local('cityzen_1.jpg')  
 
 # Create a Streamlit app
 def main():
