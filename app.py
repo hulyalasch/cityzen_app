@@ -85,43 +85,53 @@ def main():
     selected_features = []
     selected_features_placeholder = st.empty()
     submit_button = None
-    
+        # Sort the selected features in alphabetical order
+    selected_features.sort()
 
     # Initialize selected features list in session state
     if 'selected_features' not in st.session_state:
         st.session_state['selected_features'] = []
 
+    # Define the number of columns
+    num_columns = 7
+
     # Display all features as buttons
+    col_index = 0
     for feature in all_features:
-        if st.sidebar.button(feature, key=feature):
+        if col_index % num_columns == 0:
+            col = st.columns(num_columns)
+        if col[col_index % num_columns].button(feature, key=feature):
             if feature not in selected_features:
                 selected_features.append(feature)
-                selected_features_placeholder.text(f"Selected Features: {', '.join(selected_features)}")
+                #selected_features_placeholder.text(f"Selected Features: {', '.join(selected_features)}")
             if feature not in st.session_state['selected_features']:
                 st.session_state['selected_features'].append(feature)
             else:
-                st.warning(f"{feature} is already selected.")
+                st.sidebar.warning(f"{feature} is already selected.")
+        col_index += 1
 
     # Display selected features
-    st.write("Selected Features:")
+    st.sidebar.write("Selected Features:")
     for feature in st.session_state['selected_features']:
-        st.write(feature)
+        st.sidebar.write(feature)
 
     # Check if at least two features are selected
     if len(st.session_state['selected_features']) < 2:
-        st.warning('Please select at least 2 features.')
+        st.sidebar.warning('Please select at least 2 features.')
     else:
-        submit_button = st.button("Submit")
+        submit_button = st.sidebar.button("Submit")
+                # Clear the previous content (buttons)
+    
 
     # Generate recommendations if submit button is clicked
     if submit_button:
         if len(st.session_state['selected_features']) < 2:
-            st.warning('Please select at least 2 features.')
+            st.sidebar.warning('Please select at least 2 features.')
         else:
             st.spinner("Generating recommendations...")
             progress_text = "Operation in progress. Please wait."
             with st.empty():
-                my_bar = st.progress(0, text=progress_text)
+                my_bar = st.sidebar.progress(0, text=progress_text)
                 for percent_complete in range(100):
                     time.sleep(0.1)
                     my_bar.progress(percent_complete + 1, text=progress_text)
@@ -130,7 +140,6 @@ def main():
             return city_recommendations
 
                 
-
 # Generate recommendations based on selected features
 def generate_recommendations(landkreise_scaled, selected_features):
     # Select the columns of interest from the data
@@ -250,9 +259,7 @@ def generate_recommendations(landkreise_scaled, selected_features):
 
         # Display the plot
         st.pyplot(fig)
-        
-
-
+    
      
 
     #return city_recommendations
