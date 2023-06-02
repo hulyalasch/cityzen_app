@@ -213,8 +213,10 @@ def generate_recommendations(landkreise_scaled, selected_features):
 
         # Customize the plot
     ax.set_title('Recommended Cities in Germany')
-    ax.set_xlabel('Longitude')
-    ax.set_ylabel('Latitude')
+    #ax.set_xlabel('Longitude')
+    #ax.set_ylabel('Latitude')
+    ax.axis('off')
+
 
     
     # Iterate over the city polygons and add labels
@@ -244,8 +246,12 @@ def generate_recommendations(landkreise_scaled, selected_features):
         # Add a title to the plot
         plt.title(f"Map of {feature}")
 
+        ax.axis('off')
+
         # Display the plot
         st.pyplot(fig)
+        
+
 
      
 
