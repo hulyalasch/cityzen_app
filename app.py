@@ -68,7 +68,7 @@ def add_bg_from_local(image_file):
     )
 add_bg_from_local('cityzen_17.jpg')  
 
-@st.cache_data(experimental_allow_widgets=True)
+#@st.cache_data(experimental_allow_widgets=True)
 # Create a Streamlit app
 def main():
     
@@ -186,8 +186,9 @@ def main():
                     my_bar.progress(percent_complete + 1, text=progress_text)
             city_recommendations = generate_recommendations(landkreise_scaled, st.session_state['selected_features'])
             st.write(city_recommendations)
-            return city_recommendations
             recommendations_generated = True
+            return city_recommendations
+            
 
     # Reset the selected features and recommendations if reset button is clicked
     if recommendations_generated:
@@ -202,7 +203,7 @@ def main():
             
             st.sidebar.empty()  # Clear the sidebar content
 
-@st.cache_data(experimental_allow_widgets=True)               
+#@st.cache_data(experimental_allow_widgets=True)               
 # Generate recommendations based on selected features
 def generate_recommendations(landkreise_scaled, selected_features):
     # Select the columns of interest from the data
