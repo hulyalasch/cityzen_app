@@ -42,7 +42,7 @@ for percent_complete in range(100):
 # Initialize Wikipedia API
 #wiki_api = wikipediaapi.Wikipedia('en')
 
-geometry = gpd.read_file("geometry_12.topojson")
+geometry = gpd.read_file("geometry_16.topojson")
 
 landkreise_scaled = pd.read_csv("landkreise_scaled.csv")
 
@@ -66,15 +66,32 @@ def add_bg_from_local(image_file):
     """,
     unsafe_allow_html=True
     )
-add_bg_from_local('cityzen_17.jpg')  
+add_bg_from_local('cityzen_22.jpg')  
+
+# Add CSS for button styling
+st.markdown(
+    """
+    <style>
+    .unclicked-button {
+        background-color: #ffffff;
+        color: #000000;
+    }
+    .clicked-button {
+        background-color: #000000;
+        color: #ffffff;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
 #@st.cache_data(experimental_allow_widgets=True)
 # Create a Streamlit app
 def main():
     
     # Set the app title
-    st.title('CityZen')
-    st.sidebar.title("Find your Zen City")
+    st.sidebar.title('CityZen')
+    st.sidebar.header("Find your Zen City")
 
     st.sidebar.header("Which characteristics of cities are most important to you when selecting your place of residence?")
 
@@ -133,15 +150,15 @@ def main():
         }
 
     # Define the number of columns for buttons
-    num_columns = 7
+    num_columns = 8
     # Add a flag variable to keep track of recommendations generation
     recommendations_generated = False
 
     # Display buttons within each category
     for category, data in categories.items():
         col1, col2 = st.columns([1, 9])
-        col1.image(data['icon'], width=50)
-        col2.markdown(f"<h2 style='display: flex; align-items: center; margin-bottom: -20px; margin-left: -50px;'>{category}</h2>", unsafe_allow_html=True)
+        col1.image(data['icon'], width=30)
+        col2.markdown(f"<h5 style='display: flex; align-items: center; margin-bottom: -30px; margin-left: -50px;'>{category}</h5>", unsafe_allow_html=True)
         col_index = 0
         col = st.columns(num_columns)
         for button in data['buttons']:
@@ -157,6 +174,8 @@ def main():
                 else:
                     st.warning(f"{button} is already selected.")
             col_index += 1
+        selected_features_text = ", ".join(selected_features)
+        selected_features_placeholder.text(f"Selected Features: {selected_features_text}")
 
     # Display selected features
     st.sidebar.write("Selected Features:")
@@ -170,6 +189,8 @@ def main():
         reset_button = st.sidebar.button("Reset")
         if not reset_button and not recommendations_generated:
             submit_button = st.sidebar.button("Submit")
+                                # Allow adding new features
+
     
 
     # Generate recommendations if submit button is clicked
@@ -188,7 +209,6 @@ def main():
             st.write(city_recommendations)
             recommendations_generated = True
             return city_recommendations
-            
 
     # Reset the selected features and recommendations if reset button is clicked
     if recommendations_generated:
@@ -200,8 +220,8 @@ def main():
             #selected_features_placeholder.text("Selected Features:")
             selected_features_placeholder = st.empty() # Reset the display of selected features
             st.session_state['selected_features'] = []
-            
             st.sidebar.empty()  # Clear the sidebar content
+            st.experimental_rerun()
 
 #@st.cache_data(experimental_allow_widgets=True)               
 # Generate recommendations based on selected features
