@@ -42,7 +42,7 @@ for percent_complete in range(100):
 # Initialize Wikipedia API
 #wiki_api = wikipediaapi.Wikipedia('en')
 
-geometry = gpd.read_file("geometry_16.topojson")
+geometry = gpd.read_file("geometry_18.topojson")
 
 landkreise_scaled = pd.read_csv("landkreise_scaled.csv")
 
