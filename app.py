@@ -28,7 +28,6 @@ from shapely.geometry import Point, LineString, Polygon, MultiPoint, MultiLineSt
 
 import time
 import base64
-import pyautogui
 
 progress_text = "Operation in progress. Please wait."
 my_bar = st.progress(0, text=progress_text)
@@ -202,8 +201,6 @@ def main():
             st.session_state['selected_features'] = []
             
             st.sidebar.empty()  # Clear the sidebar content
-            pyautogui.hotkey("ctrl","F5")
-            
 
 @st.cache_data(experimental_allow_widgets=True)               
 # Generate recommendations based on selected features
