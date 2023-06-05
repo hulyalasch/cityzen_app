@@ -28,6 +28,7 @@ from shapely.geometry import Point, LineString, Polygon, MultiPoint, MultiLineSt
 
 import time
 import base64
+import pyautogui
 
 progress_text = "Operation in progress. Please wait."
 my_bar = st.progress(0, text=progress_text)
@@ -68,6 +69,7 @@ def add_bg_from_local(image_file):
     )
 add_bg_from_local('cityzen_17.jpg')  
 
+@st.cache_data(experimental_allow_widgets=True)
 # Create a Streamlit app
 def main():
     
@@ -86,29 +88,76 @@ def main():
     selected_features_placeholder = st.empty()
     submit_button = None
         # Sort the selected features in alphabetical order
-    selected_features.sort()
+    #selected_features.sort()
 
     # Initialize selected features list in session state
     if 'selected_features' not in st.session_state:
         st.session_state['selected_features'] = []
 
-    # Define the number of columns
-    num_columns = 7
+    # Define the categories and buttons within each category
+    categories = {
+        'Affordability': {
+        'icon': 'funding.png',
+        'buttons': [ 'low unemployment',
+    'low land prices',                                                
+    'low rental prices',                                                    
+    'high income',                                              
+    'high purchasing power', 'more places of business per person']},
+            'Social': {
+        'icon': 'social.png',
+        'buttons': [ 'Child care friendly', 'lower average age of the population', 'higher average age of the population',
+    'more cultural diversity', 'high tourism', 'low tourism', 'more restaurants per person', 'more shopping malls per person', 'high bed capacity of hospitals per person',                                            
+    'more associations per person',  'more sports and leisure activities per person']},
+            'Environmental': {
+        'icon': 'city.png',
+        'buttons':[ 'low industry', 'high industry',                                            
+    'low rurality', 'high rurality', 'low population density',                                              
+       'more coastal area',                                                 
+    'more green spaces',                                 
+    'more near-natural areas',                               
+    'more open public spaces',                                      
+    'better air quality (less nitrogen surplus)','high average temperature', 'high sunshine duration'                                            
+      
+                ]},
 
-    # Display all features as buttons
-    col_index = 0
-    for feature in all_features:
-        if col_index % num_columns == 0:
-            col = st.columns(num_columns)
-        if col[col_index % num_columns].button(feature, key=feature):
-            if feature not in selected_features:
-                selected_features.append(feature)
-                #selected_features_placeholder.text(f"Selected Features: {', '.join(selected_features)}")
-            if feature not in st.session_state['selected_features']:
-                st.session_state['selected_features'].append(feature)
-            else:
-                st.sidebar.warning(f"{feature} is already selected.")
-        col_index += 1
+    'Accessibility':{
+        'icon': 'delivery.png',
+        'buttons': [
+    'quick access to the highways',                                 
+    'quick access to the airports',                                  
+    'quick access to the railway stations',  
+    'better local public transport',  
+    'quick access to basic medical care',                         
+    'quick access to pharmacy',                         
+    'quick access to elementary school',                     
+    'quick access to supermarkt', 'Broadband access per household','less road accidents']} 
+        }
+
+    # Define the number of columns for buttons
+    num_columns = 7
+    # Add a flag variable to keep track of recommendations generation
+    recommendations_generated = False
+
+    # Display buttons within each category
+    for category, data in categories.items():
+        col1, col2 = st.columns([1, 9])
+        col1.image(data['icon'], width=50)
+        col2.markdown(f"<h2 style='display: flex; align-items: center; margin-bottom: -20px; margin-left: -50px;'>{category}</h2>", unsafe_allow_html=True)
+        col_index = 0
+        col = st.columns(num_columns)
+        for button in data['buttons']:
+            if col_index % num_columns == 0:
+                col_index = 0
+            if col[col_index].button(button, key=button):
+                if button not in selected_features:
+                    selected_features.append(button)
+                    selected_features_placeholder.text(f"Selected Features: {', '.join(selected_features)}")
+                if button not in st.session_state['selected_features']:
+                    st.session_state['selected_features'].append(button)
+                    st.write(f"{button} selected!")
+                else:
+                    st.warning(f"{button} is already selected.")
+            col_index += 1
 
     # Display selected features
     st.sidebar.write("Selected Features:")
@@ -119,8 +168,9 @@ def main():
     if len(st.session_state['selected_features']) < 2:
         st.sidebar.warning('Please select at least 2 features.')
     else:
-        submit_button = st.sidebar.button("Submit")
-                # Clear the previous content (buttons)
+        reset_button = st.sidebar.button("Reset")
+        if not reset_button and not recommendations_generated:
+            submit_button = st.sidebar.button("Submit")
     
 
     # Generate recommendations if submit button is clicked
@@ -138,8 +188,24 @@ def main():
             city_recommendations = generate_recommendations(landkreise_scaled, st.session_state['selected_features'])
             st.write(city_recommendations)
             return city_recommendations
+            recommendations_generated = True
 
-                
+    # Reset the selected features and recommendations if reset button is clicked
+    if recommendations_generated:
+        reset_button = st.sidebar.button("Reset")
+        if reset_button:
+            recommendations_generated = False
+            # Clear the selected features and reset the recommendations_generated flag
+            selected_features = []
+            #selected_features_placeholder.text("Selected Features:")
+            selected_features_placeholder = st.empty() # Reset the display of selected features
+            st.session_state['selected_features'] = []
+            
+            st.sidebar.empty()  # Clear the sidebar content
+            pyautogui.hotkey("ctrl","F5")
+            
+
+@st.cache_data(experimental_allow_widgets=True)               
 # Generate recommendations based on selected features
 def generate_recommendations(landkreise_scaled, selected_features):
     # Select the columns of interest from the data
