@@ -42,7 +42,7 @@ for percent_complete in range(100):
 # Initialize Wikipedia API
 #wiki_api = wikipediaapi.Wikipedia('en')
 
-geometry = gpd.read_file("geometry_16.topojson")
+geometry = gpd.read_file("geometry_19.topojson")
 
 landkreise_scaled = pd.read_csv("landkreise_scaled.csv")
 
@@ -118,35 +118,35 @@ def main():
     'low land prices',                                                
     'low rental prices',                                                    
     'high income',                                              
-    'high purchasing power', 'more places of business per person']},
+    'high purchasing power', 'more business places']},
             'Social': {
         'icon': 'social.png',
-        'buttons': [ 'Child care friendly', 'lower average age of the population', 'higher average age of the population',
-    'more cultural diversity', 'high tourism', 'low tourism', 'more restaurants per person', 'more shopping malls per person', 'high bed capacity of hospitals per person',                                            
-    'more associations per person',  'more sports and leisure activities per person']},
+        'buttons': [ 'Child care friendly', 'lower avg age', 'high avg age',
+    'high cultural diversity', 'high tourism', 'low tourism', 'more restaurants', 'more shopping malls', 'high capacity of hospitals',                                            
+    'more associations',  'more sports and leisure activities']},
             'Environmental': {
         'icon': 'city.png',
         'buttons':[ 'low industry', 'high industry',                                            
     'low rurality', 'high rurality', 'low population density',                                              
-       'more coastal area',                                                 
-    'more green spaces',                                 
-    'more near-natural areas',                               
-    'more open public spaces',                                      
-    'better air quality (less nitrogen surplus)','high average temperature', 'high sunshine duration'                                            
+       'high coastal area',                                                 
+    'high green spaces',                                 
+    'high near-natural areas',                               
+    'high open public spaces',                                      
+    'better air quality','high avg temperature', 'high sunshine'                                            
       
                 ]},
 
     'Accessibility':{
         'icon': 'delivery.png',
         'buttons': [
-    'quick access to the highways',                                 
-    'quick access to the airports',                                  
-    'quick access to the railway stations',  
-    'better local public transport',  
-    'quick access to basic medical care',                         
-    'quick access to pharmacy',                         
-    'quick access to elementary school',                     
-    'quick access to supermarkt', 'Broadband access per household','less road accidents']} 
+    'highways',                                 
+    'airports',                                  
+    'railway stations',  
+    'public transport',  
+    'medical care',                         
+    'pharmacy',                         
+    'elementary school',                     
+    'supermarkt', 'Broadband access','less road accidents']} 
         }
 
     # Define the number of columns for buttons
