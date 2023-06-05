@@ -93,7 +93,7 @@ def main():
     st.sidebar.title('CityZen')
     st.sidebar.header("Find your Zen City")
 
-    st.sidebar.header("Which characteristics of cities are most important to you when selecting your place of residence?")
+    st.sidebar.header("Which characteristics of cities are most important to you?")
 
     # Select 6 prioritized features
     #st.header('Select 6 Prioritized Features')
@@ -118,11 +118,11 @@ def main():
     'low land prices',                                                
     'low rental prices',                                                    
     'high income',                                              
-    'high purchasing power', 'more business places']},
+    'high purchasing power', 'more shopping malls', 'more business places']},
             'Social': {
         'icon': 'social.png',
-        'buttons': [ 'Child care friendly', 'lower avg age', 'high avg age',
-    'high cultural diversity', 'high tourism', 'low tourism', 'more restaurants', 'more shopping malls', 'high capacity of hospitals',                                            
+        'buttons': [ 'Child care friendly', 'low avg age', 'high avg age',
+    'high cultural diversity', 'high tourism', 'low tourism', 'more restaurants',  'high capacity of hospitals',                                            
     'more associations',  'more sports and leisure activities']},
             'Environmental': {
         'icon': 'city.png',
@@ -150,7 +150,7 @@ def main():
         }
 
     # Define the number of columns for buttons
-    num_columns = 8
+    num_columns = 10
     # Add a flag variable to keep track of recommendations generation
     recommendations_generated = False
 
