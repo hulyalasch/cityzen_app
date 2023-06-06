@@ -341,7 +341,7 @@ def generate_recommendations(landkreise_scaled, selected_features):
         geometry.plot(ax=ax, column=feature, legend=True)
 
         # Add a title to the plot
-        plt.title(f"Map of {feature}")
+        plt.title(f"Map of {feature}", fontsize=30)
 
         ax.axis('off')
 
