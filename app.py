@@ -81,7 +81,7 @@ def main():
     st.title('CityZen')
     st.sidebar.header("Find your Zen City")
 
-    st.markdown("## To find your ideal Zen City, what are the essential characteristics you value the most?")
+    st.markdown(f"<h3 style='display: flex; align-items: center; margin-bottom: 0px; margin-left: 0px;'>To find your ideal Zen City, what are the essential characteristics you value the most?</h3>", unsafe_allow_html=True)
 
     # Select 6 prioritized features
     #st.header('Select 6 Prioritized Features')
