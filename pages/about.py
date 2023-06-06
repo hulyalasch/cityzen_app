@@ -20,8 +20,10 @@ def add_bg_from_local(image_file):
     )
 add_bg_from_local('cityzen_24.jpg') 
 
+
 # Function for the "About" page
 def about_page():
+
     st.title('About')
     # Add content to the sidebar
     st.sidebar.markdown("Made with ❤️ by [hulyalasch](https://github.com/hulyalasch)")
@@ -51,8 +53,9 @@ def about_page():
     st.write('- adjustText: https://github.com/Phlya/adjustText')
     st.write('- scikit-learn cosine similarity: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html')
     st.write('- scikit-learn scaling: https://scikit-learn.org/stable/auto_examples/preprocessing/plot_all_scaling.html')
-    
+    st.write('- Simplifying the geometries: https://mapshaper.org/, https://github.com/yasserius/mapshaper_geojson_simplify')
 
+    
 
 # Uncomment the following line if you want to test the "About" page independently
 about_page()

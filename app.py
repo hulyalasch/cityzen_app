@@ -5,7 +5,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 # Set the page icon and layout type
-st.set_page_config(page_title="CityZen App", page_icon="location.png", layout="wide")
+st.set_page_config(page_title="CityZen App", page_icon="location.png", layout="centered")
 
 #streamlit run [app.py]
 from numpy import array
@@ -46,7 +46,7 @@ for percent_complete in range(100):
 # Initialize Wikipedia API
 #wiki_api = wikipediaapi.Wikipedia('en')
 
-geometry = gpd.read_file("geometry_19.topojson")
+geometry = gpd.read_file("geometry_20.topojson")
 
 landkreise_scaled = pd.read_csv("landkreise_scaled.csv")
 
@@ -72,32 +72,15 @@ def add_bg_from_local(image_file):
     )
 add_bg_from_local('cityzen_22.jpg')  
 
-# Add CSS for button styling
-st.markdown(
-    """
-    <style>
-    .unclicked-button {
-        background-color: #ffffff;
-        color: #000000;
-    }
-    .clicked-button {
-        background-color: #000000;
-        color: #ffffff;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
 #@st.cache_data(experimental_allow_widgets=True)
 # Create a Streamlit app
 def main():
     
     # Set the app title
-    st.sidebar.title('CityZen')
+    st.title('CityZen')
     st.sidebar.header("Find your Zen City")
 
-    st.sidebar.header("Which characteristics of cities are most important to you?")
+    st.header("To create your ideal Zen City, what are the essential characteristics you value the most?")
 
     # Select 6 prioritized features
     #st.header('Select 6 Prioritized Features')
@@ -114,32 +97,7 @@ def main():
     
 
     # Define the categories and buttons within each category
-    categories = {
-        'Affordability': {
-        'icon': 'funding.png',
-        'buttons': [ 'low unemployment',
-    'low land prices',                                                
-    'low rental prices',                                                    
-    'high income',                                              
-    'high purchasing power', 'more shopping malls', 'more business places']},
-            'Social': {
-        'icon': 'social.png',
-        'buttons': [ 'Child care friendly', 'low avg age', 'high avg age',
-    'high cultural diversity', 'high tourism', 'low tourism', 'more restaurants',  'high capacity of hospitals',                                            
-    'more associations',  'more sports and leisure activities']},
-            'Environmental': {
-        'icon': 'city.png',
-        'buttons':[ 'low industry', 'high industry',                                            
-    'low rurality', 'high rurality', 'low population density',                                              
-       'high coastal area',                                                 
-    'high green spaces',                                 
-    'high near-natural areas',                               
-    'high open public spaces',                                      
-    'better air quality','high avg temperature', 'high sunshine'                                            
-      
-                ]},
-
-    'Accessibility':{
+    categories = {    'Accessibility':{
         'icon': 'delivery.png',
         'buttons': [
     'highways',                                 
@@ -149,19 +107,41 @@ def main():
     'medical care',                         
     'pharmacy',                         
     'elementary school',                     
-    'supermarkt', 'Broadband access','less road accidents']} 
+    'supermarkt', 'Broadband access','less road accidents']},
+        'Affordability': {
+        'icon': 'funding.png',
+        'buttons': [ 'low unemployment',
+    'low land prices',                                                
+    'low rental prices',                                                    
+    'high income',                                              
+    'high purchasing power',  'more business places']},
+            'Social': {
+        'icon': 'social.png',
+        'buttons': [ 'Child care friendly', 'low avg age', 'high avg age',
+    'high cultural diversity', 'high tourism', 'low tourism', 'more restaurants', 'more shopping malls', 'high capacity of hospitals',                                            
+    'more associations',  'more sports and leisure activities']},
+            'Environmental': {
+        'icon': 'city.png',
+        'buttons':[ 'low industry', 'high industry',                                            
+    'low rurality', 'high rurality', 'low population density',                                              
+       'high coastal area',                                                 
+    'high green spaces',                                 
+    'high near-natural areas',                               
+    'high open public spaces',                                      
+    'better air quality','high avg temperature', 'high sunshine']}
         }
 
     # Define the number of columns for buttons
-    num_columns = 10
+    num_columns = 6
     # Add a flag variable to keep track of recommendations generation
     recommendations_generated = False
+    
 
     # Display buttons within each category
     for category, data in categories.items():
         col1, col2 = st.columns([1, 9])
         col1.image(data['icon'], width=30)
-        col2.markdown(f"<h5 style='display: flex; align-items: center; margin-bottom: -30px; margin-left: -50px;'>{category}</h5>", unsafe_allow_html=True)
+        col2.markdown(f"<h5 style='display: flex; align-items: center; margin-bottom: -30px; margin-left: -40px;'>{category}</h5>", unsafe_allow_html=True)
         col_index = 0
         col = st.columns(num_columns)
         for button in data['buttons']:
@@ -170,7 +150,7 @@ def main():
             if col[col_index].button(button, key=button):
                 if button not in selected_features:
                     selected_features.append(button)
-                    selected_features_placeholder.text(f"Selected Features: {', '.join(selected_features)}")
+                    selected_features_placeholder.text(f"You can select multiple parameters: {', '.join(selected_features)}")
                 if button not in st.session_state['selected_features']:
                     st.session_state['selected_features'].append(button)
                     st.write(f"{button} selected!")
@@ -178,10 +158,15 @@ def main():
                     st.warning(f"{button} is already selected.")
             col_index += 1
         selected_features_text = ", ".join(selected_features)
-        selected_features_placeholder.text(f"Selected Features: {selected_features_text}")
+        selected_features_placeholder.text(f"You can select multiple parameters: {selected_features_text}")
 
+    # Initialize variables
+    submit_button = False
+    recommendations_generated = False
     # Display selected features
     st.sidebar.write("Selected Features:")
+    submit_button = False
+    recommendations_generated = False
     for feature in st.session_state['selected_features']:
         st.sidebar.write(feature)
 
@@ -195,37 +180,32 @@ def main():
                                 # Allow adding new features
 
 
-        # Generate recommendations if submit button is clicked
-        if submit_button:
-            if len(st.session_state['selected_features']) < 2:
-                st.sidebar.warning('Please select at least 2 features.')
-            else:
-                # Create multiple pages using Streamlit's sidebar
-                pages = {
-                    'Generate Recommendations': generate_recommendations,
-                    'About': about_page
-                }
-
-                # Add a sidebar to switch between pages
-                st.sidebar.title('Navigation')
-                page_selection = st.sidebar.radio('Go to', list(pages.keys()), index=0)
-
-                if page_selection == 'Generate Recommendations':
-                    city_recommendations = generate_recommendations(landkreise_scaled, st.session_state['selected_features'])
-                    st.write(city_recommendations)
-                    recommendations_generated = True
-                    return city_recommendations
-                else:
-                    selected_page = pages[page_selection]
-                    selected_page()
-
-                st.spinner("Generating recommendations...")
-                progress_text = "Operation in progress. Please wait."
-                with st.empty():
-                    my_bar = st.sidebar.progress(0, text=progress_text)
-                    for percent_complete in range(100):
-                        time.sleep(0.1)
-                        my_bar.progress(percent_complete + 1, text=progress_text)
+    # Generate recommendations if submit button is clicked
+    if submit_button:
+        if len(st.session_state['selected_features']) < 2:
+            st.sidebar.warning('Please select at least 2 features.')
+        else:
+            st.spinner("Generating recommendations...")
+            progress_text = "Operation in progress. Please wait."
+            with st.empty():
+                my_bar = st.sidebar.progress(0, text=progress_text)
+                for percent_complete in range(100):
+                    time.sleep(0.1)
+                    my_bar.progress(percent_complete + 1, text=progress_text)
+                    st.success("Operation completed successfully!")
+            city_recommendations = generate_recommendations(landkreise_scaled, st.session_state['selected_features'])
+            st.write(city_recommendations)
+            recommendations_generated = True
+                    # Display balloons animation
+                    # Display a success message
+            #st.success("Operation completed successfully!")
+            st.balloons()
+            return city_recommendations
+            # Display a success message
+    # Display a success message
+    if recommendations_generated:
+        success_message = "Operation completed successfully!"
+        st.success(success_message)
 
     # Reset the selected features and recommendations if reset button is clicked
     if recommendations_generated:
@@ -243,6 +223,7 @@ def main():
     
             st.sidebar.empty()  # Clear the sidebar content
             st.experimental_rerun()
+        
 
 #@st.cache_data(experimental_allow_widgets=True)               
 # Generate recommendations based on selected features
@@ -311,8 +292,6 @@ def generate_recommendations(landkreise_scaled, selected_features):
     # Display the recommended cities as a comma-separated list
     #st.write(f"Recommended cities: {', '.join(wiki_links)}")
 
-
-    print("Recommendations for", selected_features)
         # Create a figure and axis
     fig, ax = plt.subplots(figsize=(10, 10))
 
