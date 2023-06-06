@@ -71,6 +71,7 @@ def add_bg_from_local(image_file):
     unsafe_allow_html=True
     )
 add_bg_from_local('cityzen_22.jpg')  
+ 
 
 #@st.cache_data(experimental_allow_widgets=True)
 # Create a Streamlit app
@@ -80,7 +81,7 @@ def main():
     st.title('CityZen')
     st.sidebar.header("Find your Zen City")
 
-    st.header("To create your ideal Zen City, what are the essential characteristics you value the most?")
+    st.header("To find your ideal Zen City, what are the essential characteristics you value the most?")
 
     # Select 6 prioritized features
     #st.header('Select 6 Prioritized Features')
