@@ -1,5 +1,5 @@
 import streamlit as st
-st.set_page_config(page_title="CityZen App", page_icon="location.png", layout="centered")
+
 
 import base64
 def add_bg_from_local(image_file):
