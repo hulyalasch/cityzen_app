@@ -196,7 +196,7 @@ def main():
                     my_bar.progress(percent_complete + 1, text=progress_text)
                     st.success("Operation completed successfully!")
             city_recommendations = generate_recommendations(landkreise_scaled, st.session_state['selected_features'])
-            st.write(city_recommendations)
+            #st.write(city_recommendations)
             recommendations_generated = True
                     # Display balloons animation
                     # Display a success message
