@@ -175,7 +175,7 @@ def main():
         st.sidebar.warning('Please select at least 2 features.')
     else:
         reset_button = st.sidebar.button("Reset")
-        st.write("To initiate a complete reset, please refresh the webpage.")
+        st.sidebar.warning("To initiate a complete reset, please refresh the webpage.")
         if not reset_button and not recommendations_generated:
             submit_button = st.sidebar.button("Submit")
                                 # Allow adding new features
@@ -199,14 +199,10 @@ def main():
             recommendations_generated = True
                     # Display balloons animation
                     # Display a success message
-            #st.success("Operation completed successfully!")
+            st.success("Operation completed successfully!")
             st.balloons()
             return city_recommendations
-            # Display a success message
-    # Display a success message
-    if recommendations_generated:
-        success_message = "Operation completed successfully!"
-        st.success(success_message)
+
 
     # Reset the selected features and recommendations if reset button is clicked
     if recommendations_generated:
