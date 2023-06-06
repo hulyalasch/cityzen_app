@@ -23,6 +23,10 @@ add_bg_from_local('cityzen_24.jpg')
 # Function for the "About" page
 def about_page():
     st.title('About')
+    # Add content to the sidebar
+    st.sidebar.markdown("Made with ❤️ by [hulyalasch](https://github.com/hulyalasch)")
+    st.sidebar.markdown("If you have any questions or would like to connect, please don't hesitate to reach out to me on [LinkedIn](https://www.linkedin.com/in/h%C3%BClya-lasch/)")
+
     st.write('CityZen App is a Streamlit app for generating recommendations for cities in Germany based on selected parameters. CityZen App aims to help users find their ideal city based on their preferences by considering multiple parameters.')
 
     st.markdown('### How the CityZen App works?')
