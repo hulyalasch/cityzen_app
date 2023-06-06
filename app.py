@@ -29,7 +29,7 @@ from shapely.geometry import Point, LineString, Polygon, MultiPoint, MultiLineSt
 
 import time
 import base64
-from pages.generate_recommendations import generate_recommendations
+#from pages.generate_recommendations import generate_recommendations
 from pages.about import about_page
 #from app import app
 
