@@ -175,6 +175,7 @@ def main():
         st.sidebar.warning('Please select at least 2 features.')
     else:
         reset_button = st.sidebar.button("Reset")
+        st.write("To initiate a complete reset, please refresh the webpage.")
         if not reset_button and not recommendations_generated:
             submit_button = st.sidebar.button("Submit")
                                 # Allow adding new features
