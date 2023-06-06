@@ -327,7 +327,13 @@ def generate_recommendations(landkreise_scaled, selected_features):
     st.title('Maps of Selected parameters')
 
     # Plot a map for each selected feature
-    for feature in selected_features:
+    selected_features = st.session_state['selected_features']
+    num_columns = len(selected_features)
+
+    # Create columns for each map
+    columns = st.columns(num_columns)
+
+    for i, feature in enumerate(selected_features):
         # Create a figure and axis
         fig, ax = plt.subplots(figsize=(10, 10))
 
@@ -339,8 +345,9 @@ def generate_recommendations(landkreise_scaled, selected_features):
 
         ax.axis('off')
 
-        # Display the plot
-        st.pyplot(fig)
+        # Display the plot in the respective column
+        with columns[i]:
+            st.pyplot(fig)
 
 if __name__ == '__main__':
     
