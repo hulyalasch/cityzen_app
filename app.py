@@ -7,6 +7,7 @@ import numpy as np
 # Set the page icon and layout type
 st.set_page_config(page_title="CityZen App", page_icon="location.png", layout="wide")
 
+#streamlit run [app.py]
 from numpy import array
 # Example: Importing specific data types from NumPy
 from numpy import int32, float64
@@ -98,17 +99,16 @@ def main():
     # Select 6 prioritized features
     #st.header('Select 6 Prioritized Features')
     # Create an empty placeholder to hold the selected features
-    
-    
     selected_features = []
     selected_features_placeholder = st.empty()
     submit_button = None
         # Sort the selected features in alphabetical order
     #selected_features.sort()
-
     # Initialize selected features list in session state
     if 'selected_features' not in st.session_state:
         st.session_state['selected_features'] = []
+
+    
 
     # Define the categories and buttons within each category
     categories = {
@@ -214,14 +214,68 @@ def main():
     if recommendations_generated:
         reset_button = st.sidebar.button("Reset")
         if reset_button:
+                        # Display selected features
+            st.sidebar.write("Selected Features:")
+            for feature in st.session_state['selected_features']:
+                del st.session_state['selected_features']
             recommendations_generated = False
             # Clear the selected features and reset the recommendations_generated flag
             selected_features = []
             #selected_features_placeholder.text("Selected Features:")
             selected_features_placeholder = st.empty() # Reset the display of selected features
-            st.session_state['selected_features'] = []
+    
             st.sidebar.empty()  # Clear the sidebar content
             st.experimental_rerun()
+
+    # Create multiple pages using Streamlit's sidebar
+    pages = {
+        'Generate Recommendations': generate_recommendations,
+        'About': about_page,
+    }
+
+    # Add a sidebar to switch between pages
+    st.sidebar.title('Navigation')
+    page_selection = st.sidebar.radio('Go to', list(pages.keys()))
+
+    # Check if the submit button is clicked
+    #submit_button = st.button('Submit')
+
+    # Run the selected page
+    if page_selection == 'Generate Recommendations' and submit_button:
+        selected_features = []  # Replace with your logic to get the selected features
+        generate_recommendations(landkreise_scaled, selected_features)
+    else:
+        selected_page = pages[page_selection]
+        selected_page()
+
+# Function for the "About" page
+def about_page():
+    st.title('About')
+    st.write('CityZen App is a Streamlit app for generating recommendations for cities in Germany based on selected parameters. CityZen App aims to help users find their ideal city based on their preferences by considering multiple parameters.')
+
+    st.markdown('### How the CityZen App works?')
+    st.write('- Select specific parameters to calculate similarity scores')
+    st.write('- Generate recommendations for selected parameters based on similarity scores of cities')
+    st.write('- Visualize the recommended cities on a map of Germany')
+    st.write('- Display maps of selected parameters for all cities')
+
+    st.markdown('### Data')
+    st.write('The data used in this app consists of information about different cities in Germany, including various parameters such as population, socio-economic factors, infrastructure, etc.')
+    st.write('The parameters are normalized and used only population-based values or ratios to provide comparability.' )
+
+    st.markdown('### Data Sources')
+    st.write('INKAR BBSR : INKAR - Indicators and Maps of Spatial and Urban Development, © Bundesinstitut für Bau-, Stadt und Raumforschung, 2023 https://www.inkar.de/' )
+    st.write('INFAS 360, Corona Datenplattform (Healthcare Datenplattform): The data collection on this platform is based on the project of the Federal Ministry of Economy and Climate Protection (BMWK) during the Corona pandemic (2020-2022). https://www.healthcare-datenplattform.de/' )
+
+
+    st.markdown('### References')
+    st.write('This app utilizes the following libraries and frameworks:')
+    st.write('- Streamlit: https://streamlit.io/')
+    st.write('- Matplotlib: https://matplotlib.org/')
+    st.write('- adjustText: https://github.com/Phlya/adjustText')
+    st.write('- scikit-learn cosine similarity: https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html')
+    st.write('- scikit-learn scaling: https://scikit-learn.org/stable/auto_examples/preprocessing/plot_all_scaling.html')
+
 
 #@st.cache_data(experimental_allow_widgets=True)               
 # Generate recommendations based on selected features
