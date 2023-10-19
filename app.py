@@ -171,6 +171,7 @@ def main():
     for feature in st.session_state['selected_features']:
         st.sidebar.write(feature)
 
+
     # Check if at least two features are selected
     if len(st.session_state['selected_features']) < 2:
         st.sidebar.warning('Please select at least 2 features.')
