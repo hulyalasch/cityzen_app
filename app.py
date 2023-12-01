@@ -345,7 +345,7 @@ def generate_recommendations(landkreise_scaled, selected_features):
 
         ax.axis('off')
 
-        # Display the plot in the respective columnmmmmnpm
+        # Display the plot in the respective column
         with columns[i]:
             st.pyplot(fig)
 
