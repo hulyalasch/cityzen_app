@@ -20,7 +20,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 import adjustText
 #import wikipedia
 #import wikipediaapi
-pip
 # Load the data
 import geopandas as gpd
 import topojson as tp
