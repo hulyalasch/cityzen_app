@@ -288,7 +288,7 @@ def generate_recommendations(landkreise_scaled, selected_features):
         wiki_links.append(wiki_url)
 
     # Display the recommended cities as a comma-separated list
-    #st.write(f"Recommended cities: {', '.join(wiki_links)}")++
+    #st.write(f"Recommended cities: {', '.join(wiki_links)}")
 
         # Create a figure and axis
     fig, ax = plt.subplots(figsize=(10, 10))
