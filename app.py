@@ -200,7 +200,7 @@ def main():
             #st.write(city_recommendations)
             recommendations_generated = True
                     # Display balloons animation
-                    # Display a success message 1
+                    # Display a success message
             st.success("Operation completed successfully!")
             st.balloons()
             return city_recommendations
